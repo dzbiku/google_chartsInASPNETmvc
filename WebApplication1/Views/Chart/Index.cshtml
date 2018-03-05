@@ -22,8 +22,10 @@
             data.addRow([years[i].toString(), sales[i], Purchase[i]]);
         }
         var options = {
-            title: 'Imports and Exports Review',
-            hAxis: { title: '@Model.YearTitle', titleTextStyle: { color: 'red'} }
+            title: 'S-70l Carry Forward Labor Hours By Position (PZL) as of @DateTime.Now',
+            hAxis: { title: '@Model.YearTitle', titleTextStyle: { color: 'red' } },
+            bar: { groupWidth: '75%' },
+            isStacked: true
         };
 
         var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
