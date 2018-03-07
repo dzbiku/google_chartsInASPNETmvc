@@ -181,6 +181,7 @@
     <Compile Include="Json\JsonTable.cs" />
     <Compile Include="Json\JsonType.cs" />
     <Compile Include="Models\ChartModel.cs" />
+    <Compile Include="Models\MainModelTrend.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
