@@ -155,7 +155,6 @@
     <Compile Include="ChartOptions.cs" />
     <Compile Include="ChartType.cs" />
     <Compile Include="Controllers\ChartController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controls\report.ascx.cs">
       <DependentUpon>report.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -227,12 +226,9 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\FirstChart.cshtml" />
-    <Content Include="Views\Home\SecondChart.cshtml" />
     <Content Include="Views\Chart\Index.cshtml" />
+    <Content Include="Views\Chart\Chart2.cshtml" />
+    <Content Include="Views\Chart\Chart1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

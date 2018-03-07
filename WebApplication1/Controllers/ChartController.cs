@@ -51,7 +51,38 @@ namespace WebApplication1.Controllers
             return View(objProductModel);
         }
 
-
+        public ActionResult Chart1()
+        {
+            TradingModel objProductModel = new TradingModel();
+            objProductModel.ProductData = new Product();
+            objProductModel.ProductData = GetChartData();
+            objProductModel.YearTitle = "Year";
+            objProductModel.ImportsTitle = "Imports";
+            objProductModel.ExportsTitle = "Exports";
+            getIPT();
+            getTrend();
+            gethistory();
+            var tmp = results;
+            var tmptrend = resultsTrend;
+            var tmphistory = resultsHistoria;
+            return View(objProductModel);
+        }
+        public ActionResult Chart2()
+        {
+            TradingModel objProductModel = new TradingModel();
+            objProductModel.ProductData = new Product();
+            objProductModel.ProductData = GetChartData();
+            objProductModel.YearTitle = "Year";
+            objProductModel.ImportsTitle = "Imports";
+            objProductModel.ExportsTitle = "Exports";
+            getIPT();
+            getTrend();
+            gethistory();
+            var tmp = results;
+            var tmptrend = resultsTrend;
+            var tmphistory = resultsHistoria;
+            return View(objProductModel);
+        }
         public Product GetChartData()
         {
             Product objproduct = new Product();
