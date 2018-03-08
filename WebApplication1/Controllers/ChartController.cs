@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Web.Mvc;
 using WebApplication1.Models;
+using Newtonsoft.Json;
 
 namespace WebApplication1.Controllers
 {
@@ -12,7 +13,7 @@ namespace WebApplication1.Controllers
         public DataTable results = new DataTable();
         public DataTable resultsTrend = new DataTable();
         public DataTable resultsHistoria = new DataTable();
-        private static string _schemaName; 
+        private static string _schemaName;
 
         //public string connString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=charts.drawing;Integrated Security=True";
         public string connString = null;//"Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=charts.drawing;Integrated Security=True";
@@ -24,7 +25,7 @@ namespace WebApplication1.Controllers
 
         //gotowe zapytanie pod jeden wykres a dokladnie TREND
         public string queryTrend = "select * ,[SBRK] + [SLHIPA] as PośrednioProdukcyjne,[SLHDPA] as BezpośrednioProdukcyjne,[SOT] as Nadgodziny,[SLT] as Nieobecności,[SBRK] + [SLHIPA] + [SLHDPA] as Wszystkie,([SBRK] + [SLHIPA])/([SBRK] + [SLHIPA] + [SLHDPA]) DOIi " +
-                                    "from "+ _schemaName+"GodzinyKontowaneP_Podsumowanie," +
+                                    "from " + _schemaName + "GodzinyKontowaneP_Podsumowanie," +
                                     "(select distinct Period_Year Parametr,left(Period_Year, 4)+'-'+right(Period_Year,2) Etykieta from GodzinyKontowaneP_Podsumowanie where Period_Year is not null ) as periodsProcedure " +
                                     "where xIPT = 1 and x = 2 and Period_Year = periodsProcedure.Parametr;";
 
@@ -49,6 +50,9 @@ namespace WebApplication1.Controllers
             var tmp = results;
             var tmptrend = resultsTrend;
             var tmphistory = resultsHistoria;
+
+            var tmpJsonTrend = DataTableToJSONWithJSONNet(tmptrend);
+
             return View(objProductModel);
         }
 
@@ -125,6 +129,24 @@ namespace WebApplication1.Controllers
             connString = ConfigurationManager.AppSettings["connectionString"];
             _schemaName = ConfigurationManager.AppSettings["schemaName"];
 
+        }
+
+        //public ActionResult GetChart()
+        //{
+        //    return Json(_myDB.Products
+        //        // you may add some query to your entitles 
+        //        //.Where()
+        //        .Select(p => new { p.Year.ToString(), p.Purchase, p.Sale }),
+        //            JsonRequestBehavior.AllowGet);
+        //}
+
+
+        //konwersja na JSON z DB, teraz funkcja przekazujaca to jako json'a do wykresu;
+        public string DataTableToJSONWithJSONNet(DataTable table)
+        {
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(table);
+            return JSONString;
         }
     }
 }
