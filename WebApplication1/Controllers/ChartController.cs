@@ -65,29 +65,30 @@ namespace WebApplication1.Controllers
             objProductModel.YearTitle = "Year";
             objProductModel.ImportsTitle = "Imports";
             objProductModel.ExportsTitle = "Exports";
-            getIPT();
-            getTrend();
-            gethistory();
-            var tmp = results;
-            var tmptrend = resultsTrend;
-            var tmphistory = resultsHistoria;
+            //getIPT();
+            //getTrend();
+            //gethistory();
+            //var tmp = results;
+            //var tmptrend = resultsTrend;
+            //var tmphistory = resultsHistoria;
             return View(objProductModel);
         }
+
+
+        //for history
         public ActionResult Chart2()
         {
             GetConnectionStringAndSchemaIfExist();
-            TradingModel objProductModel = new TradingModel();
-            objProductModel.ProductData = new Product();
-            objProductModel.ProductData = GetChartData();
+            HistoryModel objProductModel = new HistoryModel();
+            objProductModel.HistoryDatas = new History();
+           // objProductModel.HistoryDatas = resultsHistoria;
             objProductModel.YearTitle = "Year";
             objProductModel.ImportsTitle = "Imports";
             objProductModel.ExportsTitle = "Exports";
-            getIPT();
-            getTrend();
+          
             gethistory();
-            var tmp = results;
-            var tmptrend = resultsTrend;
             var tmphistory = resultsHistoria;
+            GetChartHistory();
             return View(objProductModel);
         }
         public Product GetChartData()
@@ -131,22 +132,28 @@ namespace WebApplication1.Controllers
 
         }
 
-        //public ActionResult GetChart()
-        //{
-        //    return Json(_myDB.Products
-        //        // you may add some query to your entitles 
-        //        //.Where()
-        //        .Select(p => new { p.Year.ToString(), p.Purchase, p.Sale }),
-        //            JsonRequestBehavior.AllowGet);
-        //}
-
-
         //konwersja na JSON z DB, teraz funkcja przekazujaca to jako json'a do wykresu;
         public string DataTableToJSONWithJSONNet(DataTable table)
         {
             string JSONString = string.Empty;
             JSONString = JsonConvert.SerializeObject(table);
             return JSONString;
+        }
+
+        public string GetChartTrend()
+        {
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(resultsTrend);
+            return JSONString;
+        }
+        public JsonResult GetChartHistory()
+        {
+            string JSONString = string.Empty;
+            GetConnectionStringAndSchemaIfExist();
+            gethistory();
+            var tmphistory = resultsHistoria;
+            JSONString = JsonConvert.SerializeObject(resultsHistoria);
+            return Json(new { JSONList = JSONString }, JsonRequestBehavior.AllowGet);
         }
     }
 }

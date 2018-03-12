@@ -15,9 +15,9 @@
         var Purchase = [@Model.ProductData.Exports];
 
         var data = new google.visualization.DataTable();
-        data.addColumn('string', '@Model.YearTitle');
+        @*data.addColumn('string', '@Model.YearTitle');
         data.addColumn('number', '@Model.ImportsTitle');
-        data.addColumn('number', '@Model.ExportsTitle');
+        data.addColumn('number', '@Model.ExportsTitle');*@
         for (i = 0; i < years.length; i++) {
             data.addRow([years[i].toString(), sales[i], Purchase[i]]);
         }

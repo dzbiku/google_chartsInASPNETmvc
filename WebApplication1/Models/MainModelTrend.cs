@@ -109,8 +109,15 @@ namespace WebApplication1.Models
 
     }
 
-    //for chart 'History'
     public class HistoryModel
+    {
+        public string YearTitle { get; set; }
+        public string ImportsTitle { get; set; }
+        public string ExportsTitle { get; set; }
+        public History HistoryDatas { get; set; }
+    }
+    //for chart 'History'
+    public class History
     {
         public DateTime? Od { get; set; }
         public DateTime? Do { get; set; }
