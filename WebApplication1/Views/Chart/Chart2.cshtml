@@ -1,14 +1,14 @@
 ﻿@model WebApplication1.Models.HistoryModel
-    @{
-        ViewBag.Title = "History Model in use";
-    }
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
+@{
+    ViewBag.Title = "History Model in use";
+}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
         google.charts.load('current', { 'packages': ['corechart'] });
 
         //Call function after Google Chart is loaded, it is required, otherwise you may get error
         google.charts.setOnLoadCallback(DrawonLoad);
-        
+
         function DrawonLoad() {
             $(function () {
                 $.ajax({
@@ -23,24 +23,28 @@
                         var Data = chartsdata.JSONList;
                         var data = new google.visualization.DataTable();
                         console.log(Data);
-                        data.addColumn('string', 'CategoryName');
-                        data.addColumn('number', 'PostCount');
+                        data.addColumn('string', 'Data');
+                        data.addColumn('number', 'PośrednioProdukcyjne');
+                        data.addColumn('number', 'Nieobecności');
 
                         //Loop through each list data
-                        for (var i = 0; i < Data.length; i++) {
-                            data.addRow([Data[i].CategoryName, Data[i].PostCount]);
+                        for (var i = 0; i < Data.lenght; i++) {
+                            data.addRow([Data[i].Rok, Data[i].PośrednioProdukcyjne, Data[i].Nieobecności]);
                         }
+
+                        var options = {
+            title: 'S-70l Carry Forward Labor Hours By Position (PZL) as of @DateTime.Now',
+            hAxis: { title: 'Data', titleTextStyle: { color: 'red' } },
+            bar: { groupWidth: '75%' },
+            isStacked: true
+        };
+
 
                         // Instantiate and draw our chart, passing in some options
                         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
 
                         //Draw pie chart command with data and chart options
-                        chart.draw(data,
-                            {
-                                title: "Google pie Chart in ASP.NET MVC",
-                                position: "top",
-                                fontsize: "14px",
-                            });
+                        chart.draw(data,options);
 
                     },
                     error: function () {
@@ -50,6 +54,6 @@
             })
 
         }
-    </script> 
-    <div id="chart_div" style="width: 700px; height: 400px;">
-    </div>
+</script>
+<div id="chart_div" style="width: 700px; height: 400px;">
+</div>

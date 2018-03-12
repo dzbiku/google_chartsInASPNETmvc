@@ -86,10 +86,7 @@ namespace WebApplication1.Controllers
             objProductModel.ImportsTitle = "Imports";
             objProductModel.ExportsTitle = "Exports";
           
-            //gethistory();
-            //var tmphistory = resultsHistoria;
-            //GetChartHistory();
-            return View(objProductModel);
+           return View(objProductModel);
         }
         public Product GetChartData()
         {
