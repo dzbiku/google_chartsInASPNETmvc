@@ -32,7 +32,7 @@
                         }
 
                         // Instantiate and draw our chart, passing in some options
-                        var chart = new google.visualization.PieChart(document.getElementById('chartdiv'));
+                        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
 
                         //Draw pie chart command with data and chart options
                         chart.draw(data,
@@ -51,3 +51,5 @@
 
         }
     </script> 
+    <div id="chart_div" style="width: 700px; height: 400px;">
+    </div>
