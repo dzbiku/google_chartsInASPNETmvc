@@ -14,23 +14,32 @@
                 $.ajax({
                     type: 'GET',
                     url: '/Chart/GetChartHistory',
+                    dataType: 'JSON',
                     success: function (chartsdata) {
                         // Callback that creates and populates a data table,
                         // instantiates the pie chart, passes in the data and
                         // draws it.
 
+
                         //get JSONList from Object
                         var Data = chartsdata.JSONList;
                         var data = new google.visualization.DataTable();
                         console.log(Data);
-                        data.addColumn('string', 'Data');
-                        data.addColumn('number', 'PośrednioProdukcyjne');
-                        data.addColumn('number', 'Nieobecności');
+                        //data.addColumn('string', 'Data');
+                        //data.addColumn('number', 'PośrednioProdukcyjne');
+                        //data.addColumn('number', 'Nieobecności');
+                        console.log(Data.lenght);
+
 
                         //Loop through each list data
                         for (var i = 0; i < Data.lenght; i++) {
                             data.addRow([Data[i].Rok, Data[i].PośrednioProdukcyjne, Data[i].Nieobecności]);
                         }
+
+                        //console.log(Data[1].Rok);
+                        //console.log(Data[0]);
+                        //console.log(Data.HistoryDatas[1].PośrednioProdukcyjne);
+                        //console.log(Data[1]);
 
                         var options = {
             title: 'S-70l Carry Forward Labor Hours By Position (PZL) as of @DateTime.Now',

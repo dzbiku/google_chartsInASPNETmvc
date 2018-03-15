@@ -1,36 +1,58 @@
-﻿@model WebApplication1.Models.TradingModel
+﻿@model WebApplication1.Models.HistoryModel
 @{
-    ViewBag.Title = " Google Column Chart In an Asp.Net MVC Application";
+    ViewBag.Title = "History Model in use chart 1";
 }
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://www.google.com/jsapi"></script>
 
-    google.load("visualization", "1", { packages: ["corechart"] });
+<script>
+
+    // 3. This function fires when Google Charts has been fully loaded
+    function drawChart() {
+
+        // 4. Retrieve the raw JSON data
+        var jsonData = $.ajax({
+            url: '/Chart/GetChartHistory',
+            dataType: 'json',
+        }).done(function (results) {
+
+            // 5. Create a new DataTable (Charts expects data in this format)
+            var data = new google.visualization.DataTable();
+
+            // 6. Add two columns to the DataTable
+            data.addColumn('datetime', 'Data');
+            data.addColumn('number', 'PośrednioProdukcyjne');
+            data.addColumn('number', 'Nieobecności');
+
+            // 7. Cycle through the records, adding one row per record
+            results.forEach(function (packet) {
+                data.addRow([
+                    (new Date(packet.Data)),
+                    parseFloat(packet.PośrednioProdukcyjne),
+                ]);
+            });
+
+            // 8. Create a new line chart
+            var chart = new google.visualization.LineChart($('#chart').get(0));
+
+            // 9. Render the chart, passing in our DataTable and any config data
+            chart.draw(data, {
+                title: 'Ambient Temperature (/test/temp)',
+                height: 150
+            });
+
+        });
+
+    }
+
+    // 1. Start loading Google Charts
+    google.load('visualization', '1', {
+        packages: ['corechart']
+    });
+
+    // 2. Set a callback function to fire when loading is complete
     google.setOnLoadCallback(drawChart);
 
-    function drawChart() {
-        // Create and populate the data table.
-        var years = [@Model.ProductData.Year];
-        var sales = [@Model.ProductData.Imports];
-        var Purchase = [@Model.ProductData.Exports];
-
-        var data = new google.visualization.DataTable();
-        @*data.addColumn('string', '@Model.YearTitle');
-        data.addColumn('number', '@Model.ImportsTitle');
-        data.addColumn('number', '@Model.ExportsTitle');*@
-        for (i = 0; i < years.length; i++) {
-            data.addRow([years[i].toString(), sales[i], Purchase[i]]);
-        }
-        var options = {
-            title: 'S-70l Carry Forward Labor Hours By Position (PZL) as of @DateTime.Now',
-            hAxis: { title: '@Model.YearTitle', titleTextStyle: { color: 'red' } },
-            bar: { groupWidth: '75%' },
-            isStacked: true
-        };
-
-        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-    }
 </script>
 <div id="chart_div" style="width: 700px; height: 400px;">
 </div>
