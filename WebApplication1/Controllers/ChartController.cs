@@ -188,32 +188,13 @@ namespace WebApplication1.Controllers
            return JsonConvert.SerializeObject(chartData);
         }
 
-        private static List<T> ConvertDataTable<T>(DataTable dt)
+        public ActionResult ChartTrend()
         {
-            List<T> data = new List<T>();
-            foreach (DataRow row in dt.Rows)
-            {
-                T item = GetItem<T>(row);
-                data.Add(item);
-            }
-            return data;
-        }
-        private static T GetItem<T>(DataRow dr)
-        {
-            Type temp = typeof(T);
-            T obj = Activator.CreateInstance<T>();
+            GetConnectionStringAndSchemaIfExist();
+            HistoryModel objProductModel = new HistoryModel();
+            objProductModel.HistoryDatas = new History();            
 
-            foreach (DataColumn column in dr.Table.Columns)
-            {
-                foreach (PropertyInfo pro in temp.GetProperties())
-                {
-                    if (pro.Name == column.ColumnName)
-                        pro.SetValue(obj, dr[column.ColumnName], null);
-                    else
-                        continue;
-                }
-            }
-            return obj;
+            return View();
         }
     }
 }

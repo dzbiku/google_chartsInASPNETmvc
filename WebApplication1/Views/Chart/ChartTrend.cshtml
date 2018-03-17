@@ -1,0 +1,66 @@
+﻿@model WebApplication1.Models.HistoryModel
+@{
+    ViewBag.Title = "Chart trend";
+}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+<script>
+    var chartData; // globar variable for hold chart data
+    //google.load("visualization", "1", { packages: ["corechart"] });
+    google.charts.load('current', { 'packages': ['corechart'] });
+
+    // Here We will fill chartData
+
+    $(document).ready(function () {
+
+        $.ajax({
+            url: '/Chart/GetChartDataHistory',
+            data: "",
+            dataType: "json",
+            type: "GET",
+            contentType: "application/json; chartset=utf-8",
+            success: function (data) {
+                //chartData = data.JSONList;
+                chartData = data;//.JSONList;
+            },
+            error: function () {
+                alert("Error loading data! Please try again.");
+            }
+        }).done(function () {
+            // after complete loading data
+            google.setOnLoadCallback(drawChart);
+            drawChart();
+        });
+    });
+
+    function drawChart() {
+        var data = new google.visualization.DataTable();
+
+        data.addColumn('string', 'Date');
+        data.addColumn('number', 'Pośrednio Produkcyjne');
+        data.addColumn('number', 'Bezpośrednio Produkcyjne');
+
+        // sample data: var data = [{ Date: "20140124", Visitors: "873" }, { Date: "20140125", Visitors: "875" }];
+        for (var i = 0; i < chartData.length; i++) {
+            data.addRow(chartData[i]);
+        }
+        //var data = google.visualization.arrayToDataTable(chartData);
+
+        var options = {
+            title: "History date- must be defined date",
+            //pointSize: 5,
+            hAxis: { title: 'Date Time', titleTextStyle: { color: 'red' } },
+            bar: { groupWidth: '50%' },
+            isStacked: true
+        };
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+
+    }
+
+</script>
+<div id="chart_div" style="width: 2000px; height: 1000px; float:left; margin-left:0px;">
+</div>
