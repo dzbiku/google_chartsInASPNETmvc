@@ -41,27 +41,6 @@ namespace WebApplication1.Controllers
                                       "(select distinct Period_Year Parametr,left(Period_Year, 4)+'-'+right(Period_Year,2) Etykieta from GodzinyKontowaneP_Podsumowanie where Period_Year is not null ) as periodsProcedure " +
                                       "where Period_Year = periodsProcedure.Parametr and xIPT =1 order by C";
 
-        public ActionResult Index()
-        {
-            GetConnectionStringAndSchemaIfExist();
-            TradingModel objProductModel = new TradingModel();
-            objProductModel.ProductData = new Product();
-            objProductModel.ProductData = GetChartData();
-            objProductModel.YearTitle = "Year";
-            objProductModel.ImportsTitle = "Imports";
-            objProductModel.ExportsTitle = "Exports";
-            getIPT();
-            getTrend();
-            gethistory();
-            var tmp = results;
-            var tmptrend = resultsTrend;
-            var tmphistory = resultsHistoria;
-
-            var tmpJsonTrend = DataTableToJSONWithJSONNet(tmptrend);
-
-            return View(objProductModel);
-        }
-
         public ActionResult Chart1()
         {
             GetConnectionStringAndSchemaIfExist();
@@ -89,16 +68,7 @@ namespace WebApplication1.Controllers
 
             return View(objProductModel);
         }
-        public Product GetChartData()
-        {
-            Product objproduct = new Product();
-            //we can replace this code with database data.
-            objproduct.Year = "2009,2010,2011,2012,2013,2014";
-            objproduct.Imports = "2000,1000,3000,1500,2300,500";
-            objproduct.Exports = "2100,1400,2900,2400,2300,1500";
-            return objproduct;
-        }
-
+        
         public void getIPT()
         {
             using (SqlConnection conn = new SqlConnection(connString))
@@ -172,9 +142,6 @@ namespace WebApplication1.Controllers
             foreach (DataRow i in tmphistory.Rows)
             {
                 j++;
-                var dateT =i.ItemArray[0].ToString().Split('.');
-                var dateToChart = dateT[2].Split(' ')[0] + "-" + dateT[1] + "-" + dateT[0];
-
                 var dateWithoutHours = i.ItemArray[0].ToString().Split(' ')[0];
                 chartData[j] = new object[] {
                     //i.ItemArray[0].ToString(), //data od 
@@ -195,6 +162,32 @@ namespace WebApplication1.Controllers
             objProductModel.HistoryDatas = new History();            
 
             return View();
+        }
+
+        public string GetChartDataTrend()
+        {
+            GetConnectionStringAndSchemaIfExist();
+            getTrend();
+            var tmpTrend = resultsTrend;
+
+            var chartData = new object[tmpTrend.Rows.Count + 1];
+
+            double x, y;
+            int j = 0;
+            foreach (DataRow i in tmpTrend.Rows)
+            {
+                j++;
+                var dateWithoutHours = i.ItemArray[0].ToString().Split(' ')[0];
+                chartData[j] = new object[] {
+                    //i.ItemArray[0].ToString(), //data od 
+                    dateWithoutHours,
+                    Double.TryParse(i.ItemArray[41].ToString(), out x)?x:0, //PośrednioProdukcyjne
+                    Double.TryParse(i.ItemArray[42].ToString(), out y)?y:0 //Bez----||------
+                };
+
+            }
+            //return chartData;
+            return JsonConvert.SerializeObject(chartData);
         }
     }
 }

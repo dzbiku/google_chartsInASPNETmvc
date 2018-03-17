@@ -16,7 +16,7 @@
     $(document).ready(function () {
 
         $.ajax({
-            url: '/Chart/GetChartDataHistory',
+            url: '/Chart/GetChartDataTrend',
             data: "",
             dataType: "json",
             type: "GET",
@@ -49,16 +49,15 @@
         //var data = google.visualization.arrayToDataTable(chartData);
 
         var options = {
-            title: "History date- must be defined date",
+            title: "Trend Chart",
             //pointSize: 5,
             hAxis: { title: 'Date Time', titleTextStyle: { color: 'red' } },
             bar: { groupWidth: '50%' },
             isStacked: true
         };
 
-        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
         chart.draw(data, options);
-
     }
 
 </script>
