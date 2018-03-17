@@ -37,8 +37,11 @@
         var data = new google.visualization.DataTable();
 
         data.addColumn('string', 'Date');
-        data.addColumn('number', 'Pośrednio Produkcyjne');
-        data.addColumn('number', 'Bezpośrednio Produkcyjne');
+        data.addColumn('number', 'SBRK');
+        data.addColumn('number', 'SLHIPA');
+        data.addColumn('number', 'SLDHPA');
+        data.addColumn('number', 'SOT');
+        data.addColumn('number', 'SLT');
 
         // sample data: var data = [{ Date: "20140124", Visitors: "873" }, { Date: "20140125", Visitors: "875" }];
         for (var i = 0; i < chartData.length; i++) {
@@ -47,14 +50,14 @@
         //var data = google.visualization.arrayToDataTable(chartData);
 
         var options = {
-            title: "Trend Chart",
+            title: "Trend Chart- SBRK, SLHiPA, SLDHPA, SOT and SLT",
             //pointSize: 5,
             hAxis: { title: 'Date Time', titleTextStyle: { color: 'red' } },
             bar: { groupWidth: '50%' },
             isStacked: true
         };
 
-        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
         chart.draw(data, options);
     }
 

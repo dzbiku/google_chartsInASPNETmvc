@@ -68,7 +68,7 @@ namespace WebApplication1.Controllers
 
             return View(objProductModel);
         }
-        
+
         public void getIPT()
         {
             using (SqlConnection conn = new SqlConnection(connString))
@@ -130,13 +130,13 @@ namespace WebApplication1.Controllers
         }
 
         public string GetChartDataHistory()
-        {           
+        {
             GetConnectionStringAndSchemaIfExist();
             gethistory();
             var tmphistory = resultsHistoria;
 
-            var chartData = new object[tmphistory.Rows.Count+1];
-            
+            var chartData = new object[tmphistory.Rows.Count + 1];
+
             double x, y;
             int j = 0;
             foreach (DataRow i in tmphistory.Rows)
@@ -151,18 +151,19 @@ namespace WebApplication1.Controllers
                 };
             }
             //return chartData;
-           return JsonConvert.SerializeObject(chartData);
+            return JsonConvert.SerializeObject(chartData);
         }
 
         public ActionResult ChartTrend()
         {
             GetConnectionStringAndSchemaIfExist();
             HistoryModel objProductModel = new HistoryModel();
-            objProductModel.HistoryDatas = new History();            
+            objProductModel.HistoryDatas = new History();
 
             return View();
         }
 
+        //"Trend Chart- SBRK, SLHiPA, SLDHPA, SOT and SLT",
         public string GetChartDataTrend()
         {
             GetConnectionStringAndSchemaIfExist();
@@ -171,7 +172,7 @@ namespace WebApplication1.Controllers
 
             var chartData = new object[tmpTrend.Rows.Count + 1];
 
-            double x, y;
+            double x, y,z,k,l;
             int j = 0;
             foreach (DataRow i in tmpTrend.Rows)
             {
@@ -180,8 +181,11 @@ namespace WebApplication1.Controllers
                 chartData[j] = new object[] {
                     //i.ItemArray[0].ToString(), //data od 
                     dateWithoutHours,
-                    Double.TryParse(i.ItemArray[41].ToString(), out x)?x:0, //PośrednioProdukcyjne
-                    Double.TryParse(i.ItemArray[42].ToString(), out y)?y:0 //Bez----||------
+                    Double.TryParse(i.ItemArray[13].ToString(), out x)?x:0, //SBRK
+                    Double.TryParse(i.ItemArray[14].ToString(), out y)?y:0, //SLHiPA
+                    Double.TryParse(i.ItemArray[15].ToString(), out z)?z:0, //SLDHPA
+                    Double.TryParse(i.ItemArray[16].ToString(), out k)?k:0, //SOT
+                    Double.TryParse(i.ItemArray[17].ToString(), out l)?l:0 //SLT
                 };
             }
             //return chartData;
