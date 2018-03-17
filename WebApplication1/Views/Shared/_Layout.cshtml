@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title — moja aplikacja platformy ASP.NET</title>
+    <title>Google Charts</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -15,13 +15,11 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
                 </button>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Wykres_1", "Chart1", "Chart")</li>
-                    <li>@Html.ActionLink("History", "Chart2", "Chart")</li>
+                    <li>@Html.ActionLink("History", "ChartHistory", "Chart")</li>
                     <li>@Html.ActionLink("Trend", "ChartTrend", "Chart")</li>
                 </ul>
             </div>
@@ -31,7 +29,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year — Konrad Dżbik, google_charts</p>
+            <p>&copy; @DateTime.Now.Year — OnlyOne, google_charts</p>
         </footer>
     </div>
 

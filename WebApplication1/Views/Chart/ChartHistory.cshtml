@@ -1,6 +1,6 @@
 ﻿@model WebApplication1.Models.HistoryModel
 @{
-    ViewBag.Title = "HistoryMod. JSON";
+    ViewBag.Title = "Chart History";
 }
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -8,11 +8,9 @@
 
 <script>
     var chartData; // globar variable for hold chart data
-    //google.load("visualization", "1", { packages: ["corechart"] });
     google.charts.load('current', { 'packages': ['corechart'] });
 
     // Here We will fill chartData
-
     $(document).ready(function () {
 
         $.ajax({
@@ -22,7 +20,6 @@
             type: "GET",
             contentType: "application/json; chartset=utf-8",
             success: function (data) {
-                //chartData = data.JSONList;
                 chartData = data;//.JSONList;
             },
             error: function () {
@@ -58,9 +55,7 @@
 
         var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
         chart.draw(data, options);
-
     }
-
 </script>
 <div id="chart_div" style="width: 2000px; height: 1000px; float:left; margin-left:0px;">
 </div>

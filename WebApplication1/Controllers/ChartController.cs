@@ -56,7 +56,7 @@ namespace WebApplication1.Controllers
 
 
         //for history
-        public ActionResult Chart2()
+        public ActionResult ChartHistory()
         {
             GetConnectionStringAndSchemaIfExist();
             HistoryModel objProductModel = new HistoryModel();
@@ -149,7 +149,6 @@ namespace WebApplication1.Controllers
                     Double.TryParse(i.ItemArray[41].ToString(), out x)?x:0, //PośrednioProdukcyjne
                     Double.TryParse(i.ItemArray[42].ToString(), out y)?y:0 //Bez----||------
                 };
-
             }
             //return chartData;
            return JsonConvert.SerializeObject(chartData);
@@ -184,7 +183,6 @@ namespace WebApplication1.Controllers
                     Double.TryParse(i.ItemArray[41].ToString(), out x)?x:0, //PośrednioProdukcyjne
                     Double.TryParse(i.ItemArray[42].ToString(), out y)?y:0 //Bez----||------
                 };
-
             }
             //return chartData;
             return JsonConvert.SerializeObject(chartData);

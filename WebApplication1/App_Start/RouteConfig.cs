@@ -16,7 +16,7 @@ namespace WebApplication1
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Chart", action = "Chart2", id = UrlParameter.Optional }
+                defaults: new { controller = "Chart", action = "ChartHistory", id = UrlParameter.Optional }
             );
         }
     }
