@@ -160,20 +160,13 @@ namespace WebApplication1.Controllers
         }
 
         public string GetChartDataHistory()
-        {
-            //Here MyDatabaseEntities  is our dbContext
-            //List<History> JSONString = new List<History>();
+        {           
             GetConnectionStringAndSchemaIfExist();
             gethistory();
             var tmphistory = resultsHistoria;
 
             var chartData = new object[tmphistory.Rows.Count+1];
-            //    chartData[0] = new object[]{
-            //        "Data",
-            //        "Przepraca",
-            //        "Nnieobecnosc"
-            //};
-
+            
             double x, y;
             int j = 0;
             foreach (DataRow i in tmphistory.Rows)
@@ -181,8 +174,11 @@ namespace WebApplication1.Controllers
                 j++;
                 var dateT =i.ItemArray[0].ToString().Split('.');
                 var dateToChart = dateT[2].Split(' ')[0] + "-" + dateT[1] + "-" + dateT[0];
+
+                var dateWithoutHours = i.ItemArray[0].ToString().Split(' ')[0];
                 chartData[j] = new object[] {
-                    i.ItemArray[0].ToString(), //data od 
+                    //i.ItemArray[0].ToString(), //data od 
+                    dateWithoutHours,
                     Double.TryParse(i.ItemArray[41].ToString(), out x)?x:0, //PośrednioProdukcyjne
                     Double.TryParse(i.ItemArray[42].ToString(), out y)?y:0 //Bez----||------
                 };

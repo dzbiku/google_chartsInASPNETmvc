@@ -33,31 +33,27 @@
             google.setOnLoadCallback(drawChart);
             drawChart();
         });
-    });     
+    });
 
     function drawChart() {
-        //var data = google.visualization.arrayToDataTable($.parseJSON(chartData)); //JSON.parse(JSON.stringify(json)
-        //var data = google.visualization.arrayToDataTable(chartData,true);
         var data = new google.visualization.DataTable();
 
         data.addColumn('string', 'Date');
-        data.addColumn('number', 'Nadgodziny');
-        data.addColumn('number', 'Nieobecności');
+        data.addColumn('number', 'Pośrednio Produkcyjne');
+        data.addColumn('number', 'Bezpośrednio Produkcyjne');
 
         // sample data: var data = [{ Date: "20140124", Visitors: "873" }, { Date: "20140125", Visitors: "875" }];
         for (var i = 0; i < chartData.length; i++) {
-            //var dateStr = chartData[i].Date.substr(0, 4) + "-" + chartData[i].Date.substr(4, 2) + "-" + chartData[i].Date.substr(6, 2);
-            //data.addRow(new Date(chartData[i].Od), parseInt(chartData[i].Nadgodziny, parseInt(chartData[i].Nieobecności)));
             data.addRow(chartData[i]);
-
         }
-
-
         //var data = google.visualization.arrayToDataTable(chartData);
 
         var options = {
-            title: "Company Revenue",
-            //pointSize: 5
+            title: "History date- must be defined date",
+            //pointSize: 5,
+            hAxis: { title: 'Date Time', titleTextStyle: { color: 'red' } },
+            bar: { groupWidth: '50%' },
+            isStacked: true
         };
 
         var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
@@ -66,34 +62,5 @@
     }
 
 </script>
-@*<script type="text/javascript">
-    google.charts.load('current', { 'packages': ['corechart'] });
-    google.charts.setOnLoadCallback(draw);
-
-    function draw() {
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Data');
-        data.addColumn('number', 'value1');
-        data.addColumn('number', 'value2');
-        data.addRows([
-            ['2000', 2, 37],
-            ['2001', 3, 24],
-            ['2002', 4, 41],
-            ['2003', 10, 24],
-            ['2004', 1, 41],
-            ['2005', 30, 24]
-        ]);
-
-      var options = {
-            title: 'S-70l Carry Forward Labor Hours By Position (PZL) as of @DateTime.Now',
-            hAxis: { title: '@Model.YearTitle', titleTextStyle: { color: 'red' } },
-            bar: { groupWidth: '75%' },
-            isStacked: true
-        };
-
-        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-    }
-</script>*@
-<div id="chart_div" style="width: 1500px; height: 1500px;">
+<div id="chart_div" style="width: 2000px; height: 1000px; float:left; margin-left:0px;">
 </div>
