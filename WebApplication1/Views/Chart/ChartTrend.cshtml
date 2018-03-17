@@ -11,8 +11,8 @@
     google.charts.load('current', { 'packages': ['corechart'] });
 
     // Here We will fill chartData
-    $(document).ready(function () {
 
+    function FirstMetToGetData() {
         $.ajax({
             url: '/Chart/GetChartDataTrend',
             data: "",
@@ -20,7 +20,6 @@
             type: "GET",
             contentType: "application/json; chartset=utf-8",
             success: function (data) {
-                //chartData = data.JSONList;
                 chartData = data;//.JSONList;
             },
             error: function () {
@@ -31,11 +30,13 @@
             google.setOnLoadCallback(drawChart);
             drawChart();
         });
-    });
+    }
+
+    $(document).ready(FirstMetToGetData());
 
     function drawChart() {
         var data = new google.visualization.DataTable();
-
+        console.log('Si Sinior');
         data.addColumn('string', 'Date');
         data.addColumn('number', 'SBRK');
         data.addColumn('number', 'SLHIPA');
@@ -60,7 +61,7 @@
         var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
         chart.draw(data, options);
     }
-
+    setInterval(FirstMetToGetData, 3000); 
 </script>
 <div id="chart_div" style="width: 2000px; height: 1000px; float:left; margin-left:0px;">
 </div>
