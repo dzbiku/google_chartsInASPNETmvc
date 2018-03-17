@@ -8,21 +8,22 @@
 
 <script>
     var chartData; // globar variable for hold chart data
-    google.load("visualization", "1", { packages: ["corechart"] });
+    //google.load("visualization", "1", { packages: ["corechart"] });
+    google.charts.load('current', { 'packages': ['corechart'] });
 
     // Here We will fill chartData
 
     $(document).ready(function () {
 
         $.ajax({
-            url: '/Chart/GetChartHistory',
+            url: '/Chart/GetChartDataHistory',
             data: "",
             dataType: "json",
-            type: "POST",
+            type: "GET",
             contentType: "application/json; chartset=utf-8",
             success: function (data) {
                 //chartData = data.JSONList;
-                chartData = data.JSONList;
+                chartData = data;//.JSONList;
             },
             error: function () {
                 alert("Error loading data! Please try again.");
@@ -39,14 +40,16 @@
         //var data = google.visualization.arrayToDataTable(chartData,true);
         var data = new google.visualization.DataTable();
 
-        data.addColumn('date', 'Date');
+        data.addColumn('string', 'Date');
         data.addColumn('number', 'Nadgodziny');
         data.addColumn('number', 'Nieobecności');
 
         // sample data: var data = [{ Date: "20140124", Visitors: "873" }, { Date: "20140125", Visitors: "875" }];
         for (var i = 0; i < chartData.length; i++) {
-            var dateStr = chartData[i].Date.substr(0, 4) + "-" + chartData[i].Date.substr(4, 2) + "-" + chartData[i].Date.substr(6, 2);
-            data.addRow([new Date(dateStr), parseInt(data[i].Nadgodziny, parseInt(data[i].Nieobecności))]);
+            //var dateStr = chartData[i].Date.substr(0, 4) + "-" + chartData[i].Date.substr(4, 2) + "-" + chartData[i].Date.substr(6, 2);
+            //data.addRow(new Date(chartData[i].Od), parseInt(chartData[i].Nadgodziny, parseInt(chartData[i].Nieobecności)));
+            data.addRow(chartData[i]);
+
         }
 
 
@@ -57,8 +60,8 @@
             //pointSize: 5
         };
 
-        var barChart = new google.visualization.BarChart(document.getElementById('chart_div'));
-        barChart.draw(data, options);
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
 
     }
 
@@ -92,5 +95,5 @@
         chart.draw(data, options);
     }
 </script>*@
-<div id="chart_div" style="width: 700px; height: 400px;">
+<div id="chart_div" style="width: 1500px; height: 1500px;">
 </div>

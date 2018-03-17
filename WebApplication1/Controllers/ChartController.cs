@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web.Helpers;
 using System.Web.Script.Services;
+using System.Globalization;
 
 namespace WebApplication1.Controllers
 {
@@ -166,20 +167,29 @@ namespace WebApplication1.Controllers
             gethistory();
             var tmphistory = resultsHistoria;
 
-            var chartData = new object[tmphistory.Rows.Count + 1];
-            chartData[0] = new object[]{
-                0,
-                "Przepraca",
-                "Nnieobecnosc"
-        };
+            var chartData = new object[tmphistory.Rows.Count+1];
+            //    chartData[0] = new object[]{
+            //        "Data",
+            //        "Przepraca",
+            //        "Nnieobecnosc"
+            //};
 
+            double x, y;
             int j = 0;
             foreach (DataRow i in tmphistory.Rows)
             {
-                j++;                
-                chartData[j] = new object[] { i.ItemArray[2].ToString(), i.ItemArray[8].ToString(), i.ItemArray[9].ToString() };
+                j++;
+                var dateT =i.ItemArray[0].ToString().Split('.');
+                var dateToChart = dateT[2].Split(' ')[0] + "-" + dateT[1] + "-" + dateT[0];
+                chartData[j] = new object[] {
+                    i.ItemArray[0].ToString(), //data od 
+                    Double.TryParse(i.ItemArray[41].ToString(), out x)?x:0, //PośrednioProdukcyjne
+                    Double.TryParse(i.ItemArray[42].ToString(), out y)?y:0 //Bez----||------
+                };
+
             }
-            return JsonConvert.SerializeObject(chartData); ;
+            //return chartData;
+           return JsonConvert.SerializeObject(chartData);
         }
 
         private static List<T> ConvertDataTable<T>(DataTable dt)
