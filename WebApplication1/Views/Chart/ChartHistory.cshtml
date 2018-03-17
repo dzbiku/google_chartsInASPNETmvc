@@ -10,9 +10,7 @@
     var chartData; // globar variable for hold chart data
     google.charts.load('current', { 'packages': ['corechart'] });
 
-    // Here We will fill chartData
-    $(document).ready(function () {
-
+    function FirstMetToGetDataHistory() {
         $.ajax({
             url: '/Chart/GetChartDataHistory',
             data: "",
@@ -30,7 +28,9 @@
             google.setOnLoadCallback(drawChart);
             drawChart();
         });
-    });
+    }
+
+    $(document).ready(FirstMetToGetDataHistory());
 
     function drawChart() {
         var data = new google.visualization.DataTable();
@@ -56,6 +56,9 @@
         var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
         chart.draw(data, options);
     }
+
+    setInterval(FirstMetToGetDataHistory, 3000); 
+
 </script>
-<div id="chart_div" style="width: 2000px; height: 1000px; float:left; margin-left:0px;">
+<div id="chart_div" style="width: 1900px; height: 900px; float:left; margin-left:0px;">
 </div>

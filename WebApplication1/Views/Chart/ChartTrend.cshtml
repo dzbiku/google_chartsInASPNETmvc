@@ -10,8 +10,6 @@
     var chartData; // globar variable for hold chart data
     google.charts.load('current', { 'packages': ['corechart'] });
 
-    // Here We will fill chartData
-
     function FirstMetToGetData() {
         $.ajax({
             url: '/Chart/GetChartDataTrend',
@@ -63,5 +61,5 @@
     }
     setInterval(FirstMetToGetData, 3000); 
 </script>
-<div id="chart_div" style="width: 2000px; height: 1000px; float:left; margin-left:0px;">
+<div id="chart_div" style="width: 1900px; height: 900px; float:left; margin-left:0px;">
 </div>
