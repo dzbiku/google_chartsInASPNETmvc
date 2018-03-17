@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web.Helpers;
+using System.Web.Script.Services;
 
 namespace WebApplication1.Controllers
 {
@@ -142,10 +143,10 @@ namespace WebApplication1.Controllers
             JSONString = JsonConvert.SerializeObject(resultsTrend);
             return JSONString;
         }
-        public string GetChartHistory()
+        public JsonResult GetChartHistory()
         {
-            var JSONString= string.Empty;
-            
+            var JSONString = string.Empty;
+
             //List<History> JSONString = new List<History>();
             GetConnectionStringAndSchemaIfExist();
             gethistory();
@@ -153,8 +154,32 @@ namespace WebApplication1.Controllers
             //JSONString = ConvertDataTable<History>(resultsHistoria);
 
             JSONString = JsonConvert.SerializeObject(resultsHistoria);
-            //return Json(new { JSONList = JSONString }, JsonRequestBehavior.AllowGet);
-            return JSONString;
+            return Json(new { JSONList = JSONString }, JsonRequestBehavior.AllowGet);
+            //return JSONString;
+        }
+
+        public string GetChartDataHistory()
+        {
+            //Here MyDatabaseEntities  is our dbContext
+            //List<History> JSONString = new List<History>();
+            GetConnectionStringAndSchemaIfExist();
+            gethistory();
+            var tmphistory = resultsHistoria;
+
+            var chartData = new object[tmphistory.Rows.Count + 1];
+            chartData[0] = new object[]{
+                0,
+                "Przepraca",
+                "Nnieobecnosc"
+        };
+
+            int j = 0;
+            foreach (DataRow i in tmphistory.Rows)
+            {
+                j++;                
+                chartData[j] = new object[] { i.ItemArray[2].ToString(), i.ItemArray[8].ToString(), i.ItemArray[9].ToString() };
+            }
+            return JsonConvert.SerializeObject(chartData); ;
         }
 
         private static List<T> ConvertDataTable<T>(DataTable dt)

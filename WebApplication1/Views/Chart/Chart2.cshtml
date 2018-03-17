@@ -22,7 +22,7 @@
             contentType: "application/json; chartset=utf-8",
             success: function (data) {
                 //chartData = data.JSONList;
-                chartData = data;
+                chartData = data.JSONList;
             },
             error: function () {
                 alert("Error loading data! Please try again.");
@@ -32,15 +32,29 @@
             google.setOnLoadCallback(drawChart);
             drawChart();
         });
-    });
-
+    });     
 
     function drawChart() {
-        var data = google.visualization.arrayToDataTable($.parseJSON(chartData), true);
+        //var data = google.visualization.arrayToDataTable($.parseJSON(chartData)); //JSON.parse(JSON.stringify(json)
+        //var data = google.visualization.arrayToDataTable(chartData,true);
+        var data = new google.visualization.DataTable();
+
+        data.addColumn('date', 'Date');
+        data.addColumn('number', 'Nadgodziny');
+        data.addColumn('number', 'Nieobecności');
+
+        // sample data: var data = [{ Date: "20140124", Visitors: "873" }, { Date: "20140125", Visitors: "875" }];
+        for (var i = 0; i < chartData.length; i++) {
+            var dateStr = chartData[i].Date.substr(0, 4) + "-" + chartData[i].Date.substr(4, 2) + "-" + chartData[i].Date.substr(6, 2);
+            data.addRow([new Date(dateStr), parseInt(data[i].Nadgodziny, parseInt(data[i].Nieobecności))]);
+        }
+
+
+        //var data = google.visualization.arrayToDataTable(chartData);
 
         var options = {
             title: "Company Revenue",
-            pointSize: 5
+            //pointSize: 5
         };
 
         var barChart = new google.visualization.BarChart(document.getElementById('chart_div'));
