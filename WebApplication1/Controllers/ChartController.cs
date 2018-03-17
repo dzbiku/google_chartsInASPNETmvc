@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Web.Helpers;
 
 namespace WebApplication1.Controllers
 {
@@ -79,12 +80,12 @@ namespace WebApplication1.Controllers
             GetConnectionStringAndSchemaIfExist();
             HistoryModel objProductModel = new HistoryModel();
             objProductModel.HistoryDatas = new History();
-           // objProductModel.HistoryDatas = resultsHistoria;
+            // objProductModel.HistoryDatas = resultsHistoria;
             objProductModel.YearTitle = "Year";
             objProductModel.ImportsTitle = "Imports";
             objProductModel.ExportsTitle = "Exports";
-          
-           return View(objProductModel);
+
+            return View(objProductModel);
         }
         public Product GetChartData()
         {
@@ -141,17 +142,19 @@ namespace WebApplication1.Controllers
             JSONString = JsonConvert.SerializeObject(resultsTrend);
             return JSONString;
         }
-        public JsonResult GetChartHistory()
+        public string GetChartHistory()
         {
-            string JSONString = string.Empty;
+            var JSONString= string.Empty;
+            
             //List<History> JSONString = new List<History>();
             GetConnectionStringAndSchemaIfExist();
             gethistory();
             var tmphistory = resultsHistoria;
             //JSONString = ConvertDataTable<History>(resultsHistoria);
-            
+
             JSONString = JsonConvert.SerializeObject(resultsHistoria);
-            return Json(new { JSONList = JSONString }, JsonRequestBehavior.AllowGet);
+            //return Json(new { JSONList = JSONString }, JsonRequestBehavior.AllowGet);
+            return JSONString;
         }
 
         private static List<T> ConvertDataTable<T>(DataTable dt)

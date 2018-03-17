@@ -1,68 +1,82 @@
 ﻿@model WebApplication1.Models.HistoryModel
 @{
-    ViewBag.Title = "History Model in use";
+    ViewBag.Title = "HistoryMod. JSON";
 }
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-        google.charts.load('current', { 'packages': ['corechart'] });
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
-        //Call function after Google Chart is loaded, it is required, otherwise you may get error
-        google.charts.setOnLoadCallback(DrawonLoad);
+<script>
+    var chartData; // globar variable for hold chart data
+    google.load("visualization", "1", { packages: ["corechart"] });
 
-        function DrawonLoad() {
-            $(function () {
-                $.ajax({
-                    type: 'GET',
-                    url: '/Chart/GetChartHistory',
-                    dataType: 'JSON',
-                    success: function (chartsdata) {
-                        // Callback that creates and populates a data table,
-                        // instantiates the pie chart, passes in the data and
-                        // draws it.
+    // Here We will fill chartData
+
+    $(document).ready(function () {
+
+        $.ajax({
+            url: '/Chart/GetChartHistory',
+            data: "",
+            dataType: "json",
+            type: "POST",
+            contentType: "application/json; chartset=utf-8",
+            success: function (data) {
+                //chartData = data.JSONList;
+                chartData = data;
+            },
+            error: function () {
+                alert("Error loading data! Please try again.");
+            }
+        }).done(function () {
+            // after complete loading data
+            google.setOnLoadCallback(drawChart);
+            drawChart();
+        });
+    });
 
 
-                        //get JSONList from Object
-                        var Data = chartsdata.JSONList;
-                        var data = new google.visualization.DataTable();
-                        console.log(Data);
-                        //data.addColumn('string', 'Data');
-                        //data.addColumn('number', 'PośrednioProdukcyjne');
-                        //data.addColumn('number', 'Nieobecności');
-                        console.log(Data.lenght);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable($.parseJSON(chartData), true);
 
+        var options = {
+            title: "Company Revenue",
+            pointSize: 5
+        };
 
-                        //Loop through each list data
-                        for (var i = 0; i < Data.lenght; i++) {
-                            data.addRow([Data[i].Rok, Data[i].PośrednioProdukcyjne, Data[i].Nieobecności]);
-                        }
+        var barChart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        barChart.draw(data, options);
 
-                        //console.log(Data[1].Rok);
-                        //console.log(Data[0]);
-                        //console.log(Data.HistoryDatas[1].PośrednioProdukcyjne);
-                        //console.log(Data[1]);
+    }
 
-                        var options = {
+</script>
+@*<script type="text/javascript">
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(draw);
+
+    function draw() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Data');
+        data.addColumn('number', 'value1');
+        data.addColumn('number', 'value2');
+        data.addRows([
+            ['2000', 2, 37],
+            ['2001', 3, 24],
+            ['2002', 4, 41],
+            ['2003', 10, 24],
+            ['2004', 1, 41],
+            ['2005', 30, 24]
+        ]);
+
+      var options = {
             title: 'S-70l Carry Forward Labor Hours By Position (PZL) as of @DateTime.Now',
-            hAxis: { title: 'Data', titleTextStyle: { color: 'red' } },
+            hAxis: { title: '@Model.YearTitle', titleTextStyle: { color: 'red' } },
             bar: { groupWidth: '75%' },
             isStacked: true
         };
 
-
-                        // Instantiate and draw our chart, passing in some options
-                        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-
-                        //Draw pie chart command with data and chart options
-                        chart.draw(data,options);
-
-                    },
-                    error: function () {
-                        alert("Error loading data! Please try again.");
-                    }
-                });
-            })
-
-        }
-</script>
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+    }
+</script>*@
 <div id="chart_div" style="width: 700px; height: 400px;">
 </div>
