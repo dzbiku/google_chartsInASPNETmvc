@@ -195,6 +195,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="GoogleAnalytics.csproj" />
+    <Content Include="Imges\Wykres.png" />
     <Content Include="js\chart-config.js" />
     <Content Include="js\init-analytics.js" />
     <Content Include="js\jquery-1.9.1.min.js" />

@@ -8,6 +8,8 @@
 
 <script>
     var chartData; // globar variable for hold chart data
+    var intervalTime = 90000;
+
     google.charts.load('current', { 'packages': ['corechart'] });
 
     function FirstMetToGetDataHistory() {
@@ -52,13 +54,43 @@
             bar: { groupWidth: '50%' },
             isStacked: true
         };
-
+       
         var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+        // Wait for the chart to finish drawing before calling the getImageURI() method.
+        google.visualization.events.addListener(chart, 'ready', function () {
+            document.getElementById('png').outerHTML = '<a href="' + chart.getImageURI() + '" download="history' + Date.now() + '"><img border="0" src="/Imges/Wykres.png" alt="Download" width="71" height="51">Printable version</a>';
+        });
+
         chart.draw(data, options);
     }
 
-    setInterval(FirstMetToGetDataHistory, 3000); 
+    setInterval(FirstMetToGetDataHistory, intervalTime);    
 
+    function startTimer(duration, display) {
+        var timer = duration, minutes, seconds;
+        setInterval(function () {
+            minutes = parseInt(timer / 60, 10)
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = minutes + ":" + seconds;
+
+            if (--timer < 0) {
+                timer = duration;
+            }
+        }, 1000);
+    }
+
+    window.onload = function () {
+        var timeInMinutes = intervalTime / 1000, // 60* 5
+            display = document.querySelector('#timer');
+        startTimer(timeInMinutes, display);
+    }
 </script>
+<div align="right">Next refresh<div id="timer">mm:ss:ms</div></div>
+<div id='png'></div>
 <div id="chart_div" style="width: 1900px; height: 900px; float:left; margin-left:0px;">
 </div>
