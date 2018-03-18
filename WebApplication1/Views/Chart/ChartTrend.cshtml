@@ -59,7 +59,8 @@
         var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
         chart.draw(data, options);
     }
-    setInterval(FirstMetToGetData, 3000); 
+    setInterval(FirstMetToGetData, 3000);
 </script>
-<div id="chart_div" style="width: 1900px; height: 900px; float:left; margin-left:0px;">
+<div align="right">Next refresh<div id="timer">mm:ss:ms</div></div>
+<div id="chart_div" style="width: 1900px; height: 900px;">
 </div>
