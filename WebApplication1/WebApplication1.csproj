@@ -160,16 +160,6 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controls\report.ascx.designer.cs" />
-    <Compile Include="Examples\Ex01_Simple.aspx.cs">
-      <DependentUpon>Ex01_Simple.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Examples\Ex01_Simple.aspx.designer.cs" />
-    <Compile Include="Examples\Ex02_Advanced.aspx.cs">
-      <DependentUpon>Ex02_Advanced.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Examples\Ex02_Advanced.aspx.designer.cs" />
     <Compile Include="FeedGenerator.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -189,8 +179,6 @@
     </Content>
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Controls\report.ascx" />
-    <Content Include="Examples\Ex01_Simple.aspx" />
-    <Content Include="Examples\Ex02_Advanced.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
