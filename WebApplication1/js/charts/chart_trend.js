@@ -41,7 +41,7 @@ function drawChart(chartTypeTrend) {
         //pointSize: 5,
         hAxis: { title: 'Date Time', titleTextStyle: { color: 'red' } },
         bar: { groupWidth: '50%' },
-        isStacked: true,
+        isStacked: true
     };
 
     //ColumnChart
