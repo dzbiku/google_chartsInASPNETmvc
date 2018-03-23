@@ -79,7 +79,9 @@
 
     $(document).ready(FirstMetToGetDataHistory('ColumnChart'));
 
-    setInterval(FirstMetToGetDataHistory, intervalTime);
+    setInterval(function () {
+        FirstMetToGetDataHistory($("#myselect").val());
+    }, intervalTime);
 
     function startTimer(duration, display) {
         var timer = duration, minutes, seconds;

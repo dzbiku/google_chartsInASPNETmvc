@@ -9,9 +9,9 @@
 <script>
     var chartData; // globar variable for hold chart data
     google.charts.load('current', { 'packages': ['corechart'] });
-    var intervalTime =90000;
+    var intervalTime = 90000;
 
-    function FirstMetToGetData() {
+    function FirstMetToGetData(chartTypeTrend) {
         $.ajax({
             url: '/Chart/GetChartDataTrend',
             data: "",
@@ -26,14 +26,14 @@
             }
         }).done(function () {
             // after complete loading data
-            google.setOnLoadCallback(drawChart);
-            drawChart();
+            google.setOnLoadCallback(function () { drawChart(chartTypeTrend); });
+            drawChart(chartTypeTrend);
         });
     }
 
-    $(document).ready(FirstMetToGetData());
+    $(document).ready(FirstMetToGetData('ColumnChart'));
 
-    function drawChart() {
+    function drawChart(chartTypeTrend) {
         var data = new google.visualization.DataTable();
         console.log('Si Sinior');
         data.addColumn('string', 'Date');
@@ -57,21 +57,25 @@
             isStacked: true,
         };
 
-        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        //ColumnChart
+        if (chartTypeTrend == 'LineChart') {
+            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        }
+        if (chartTypeTrend == 'ColumnChart') {
+            var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        }
+
 
         // Wait for the chart to finish drawing before calling the getImageURI() method.
         google.visualization.events.addListener(chart, 'ready', function () {
-            //chart_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
             document.getElementById('png').outerHTML = '<a href="' + chart.getImageURI() + '" download="trend' + Date.now() + '"><img border="0" src="/Imges/Wykres.png" alt="Download" width="71" height="51">Printable version</a>';
-            //console.log(chart_div.innerHTML);
         });
         chart.draw(data, options);
     }
 
 
     setInterval(function () {
-        FirstMetToGetData();
-        //startNewTimer();
+        FirstMetToGetData($("#myselect").val());
     }, intervalTime);
 
     function startTimer(duration, display) {
@@ -92,13 +96,30 @@
     }
 
     window.onload = function () {
-        var timeInMinutes = intervalTime/1000, // 60* 5
-                display = document.querySelector('#timer');
-            startTimer(timeInMinutes, display);
+        var timeInMinutes = intervalTime / 1000, // 60* 5
+            display = document.querySelector('#timer');
+        startTimer(timeInMinutes, display);
     }
 
+    $(document).ready(function () {
+        $('#myselect').change(function () {
+            //alert($(this).val());
+            console.log($("#myselect").val());
+            FirstMetToGetData($("#myselect").val());
+        });
+    });
 </script>
-<div align="right">Next refresh<div id="timer">mm:ss:ms</div></div>
-<div id='png'></div>
+<div align="right">
+    Next refresh<div id="timer">mm:ss:ms</div>
+</div>
+<div style="grid-template-columns: 30% 40%;">
+    <div id='png'></div>
+    <div>
+        <select id="myselect">
+            <option value="ColumnChart" selected="selected">Column</option>
+            <option value="LineChart">Line</option>
+        </select>
+    </div>
+</div>
 <div id="chart_div" style="width: 1900px; height: 900px;">
 </div>
