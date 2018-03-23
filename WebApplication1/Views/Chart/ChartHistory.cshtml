@@ -11,8 +11,8 @@
     var intervalTime = 90000;
 
     google.charts.load('current', { 'packages': ['corechart'] });
-
-    function FirstMetToGetDataHistory() {
+    // change chart type
+    function FirstMetToGetDataHistory(chartType) {
         $.ajax({
             url: '/Chart/GetChartDataHistory',
             data: "",
@@ -27,14 +27,12 @@
             }
         }).done(function () {
             // after complete loading data
-            google.setOnLoadCallback(drawChart);
-            drawChart();
+            google.setOnLoadCallback(function () { drawChart(chartType); });
+            drawChart(chartType);
         });
     }
-
-    $(document).ready(FirstMetToGetDataHistory());
-
-    function drawChart() {
+    //
+    function drawChart(chartType) {
         var data = new google.visualization.DataTable();
 
         data.addColumn('string', 'Date');
@@ -45,7 +43,6 @@
         for (var i = 0; i < chartData.length; i++) {
             data.addRow(chartData[i]);
         }
-        //var data = google.visualization.arrayToDataTable(chartData);
 
         var options = {
             title: "History date- must be defined date and other params",
@@ -60,11 +57,17 @@
                     opacity: 0.2,
                     type: 'exponential'
                 }
-            }
+            },
+            pieHole: 0.4,
         };
         //ColumnChart
-        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-
+        if (chartType == 'LineChart') {
+            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        }
+        if (chartType == 'ColumnChart') {
+            var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        }
+       
         // Wait for the chart to finish drawing before calling the getImageURI() method.
         google.visualization.events.addListener(chart, 'ready', function () {
             document.getElementById('png').outerHTML = '<a href="' + chart.getImageURI() + '" download="history' + Date.now() + '"><img border="0" src="/Imges/Wykres.png" alt="Download" width="71" height="51">Printable version</a>';
@@ -72,6 +75,9 @@
 
         chart.draw(data, options);
     }
+    //
+
+    $(document).ready(FirstMetToGetDataHistory('ColumnChart'));
 
     setInterval(FirstMetToGetDataHistory, intervalTime);
 
@@ -98,15 +104,11 @@
         startTimer(timeInMinutes, display);
     }
 
-    //$(document).ready(function () {
-    //    $(":selected").css("background-color", "red");
-    //    console.log($("#myselect").val());
-    //});
-
     $(document).ready(function () {
         $('#myselect').change(function () {
             //alert($(this).val());
             console.log($("#myselect").val());
+            FirstMetToGetDataHistory($("#myselect").val());
         });
     });
 </script>
@@ -119,7 +121,6 @@
         <select id="myselect">
             <option value="ColumnChart" selected="selected">Column</option>
             <option value="LineChart">Line</option>
-            <option value="PieChart">Circle</option>
         </select>
     </div>
 </div>
