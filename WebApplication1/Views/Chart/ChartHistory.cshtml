@@ -52,9 +52,17 @@
             //pointSize: 5,
             hAxis: { title: 'Date Time', titleTextStyle: { color: 'red' } },
             bar: { groupWidth: '50%' },
-            isStacked: true
+            isStacked: true,
+            trendlines: {
+                0: {
+                    color: 'purple',
+                    lineWidth: 10,
+                    opacity: 0.2,
+                    type: 'exponential'
+                }
+            }
         };
-       
+        //ColumnChart
         var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 
         // Wait for the chart to finish drawing before calling the getImageURI() method.
@@ -65,7 +73,7 @@
         chart.draw(data, options);
     }
 
-    setInterval(FirstMetToGetDataHistory, intervalTime);    
+    setInterval(FirstMetToGetDataHistory, intervalTime);
 
     function startTimer(duration, display) {
         var timer = duration, minutes, seconds;
@@ -89,8 +97,31 @@
             display = document.querySelector('#timer');
         startTimer(timeInMinutes, display);
     }
+
+    //$(document).ready(function () {
+    //    $(":selected").css("background-color", "red");
+    //    console.log($("#myselect").val());
+    //});
+
+    $(document).ready(function () {
+        $('#myselect').change(function () {
+            //alert($(this).val());
+            console.log($("#myselect").val());
+        });
+    });
 </script>
-<div align="right">Next refresh<div id="timer">mm:ss:ms</div></div>
-<div id='png'></div>
+<div align="right">
+    Next refresh<div id="timer">mm:ss:ms</div>
+</div>
+<div style="grid-template-columns: 30% 40%;">
+    <div id='png'></div>
+    <div>
+        <select id="myselect">
+            <option value="ColumnChart" selected="selected">Column</option>
+            <option value="LineChart">Line</option>
+            <option value="PieChart">Circle</option>
+        </select>
+    </div>
+</div>
 <div id="chart_div" style="width: 1900px; height: 900px; float:left; margin-left:0px;">
 </div>
