@@ -46,10 +46,10 @@ function drawChart(chartTypeTrend) {
 
     //ColumnChart
     if (chartTypeTrend == 'LineChart') {
-        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart = new google.visualization.LineChart(document.getElementById('chart_div'));
     }
     if (chartTypeTrend == 'ColumnChart') {
-        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
     }
 
 

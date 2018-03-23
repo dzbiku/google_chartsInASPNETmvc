@@ -148,27 +148,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnalyticsConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="ChartOptions.cs" />
-    <Compile Include="ChartType.cs" />
     <Compile Include="Controllers\ChartController.cs" />
-    <Compile Include="Controls\report.ascx.cs">
-      <DependentUpon>report.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controls\report.ascx.designer.cs" />
-    <Compile Include="FeedGenerator.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Json\JsonCell.cs" />
-    <Compile Include="Json\JsonColumn.cs" />
-    <Compile Include="Json\JsonRow.cs" />
-    <Compile Include="Json\JsonTable.cs" />
-    <Compile Include="Json\JsonType.cs" />
     <Compile Include="Models\ChartModel.cs" />
     <Compile Include="Models\MainModelTrend.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -178,17 +164,13 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Controls\report.ascx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="GoogleAnalytics.csproj" />
     <Content Include="Imges\Wykres.png" />
-    <Content Include="js\chart-config.js" />
     <Content Include="js\charts\chart_history.js" />
     <Content Include="js\charts\chart_trend.js" />
     <Content Include="js\charts\main_chart.js" />
-    <Content Include="js\init-analytics.js" />
     <Content Include="js\jquery-1.9.1.min.js" />
     <Content Include="License.txt" />
     <Content Include="READ_ME.txt" />
@@ -248,9 +230,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Chart\Index.cshtml" />
     <Content Include="Views\Chart\ChartHistory.cshtml" />
-    <Content Include="Views\Chart\Chart1.cshtml" />
+    <Content Include="Views\Chart\ChartExmalple.cshtml" />
     <Content Include="Views\Chart\ChartTrend.cshtml" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />

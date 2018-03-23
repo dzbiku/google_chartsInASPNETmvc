@@ -1,13 +1,13 @@
 ﻿var chartData; // globar variable for hold chart data
 var intervalTime = 90000;
-
+var chart;
 google.charts.load('current', { 'packages': ['corechart'] });
 
 window.onload = function () {
     var timeInMinutes = intervalTime / 1000, // 60* 5
         display = document.querySelector('#timer');
     startTimer(timeInMinutes, display);
-}
+};
 
 function startTimer(duration, display) {
     var timer = duration, minutes, seconds;
@@ -24,4 +24,4 @@ function startTimer(duration, display) {
             timer = duration;
         }
     }, 1000);
-}
+};

@@ -5,12 +5,6 @@ using System.Data.SqlClient;
 using System.Web.Mvc;
 using WebApplication1.Models;
 using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Web.Helpers;
-using System.Web.Script.Services;
-using System.Globalization;
 
 namespace WebApplication1.Controllers
 {
@@ -67,6 +61,11 @@ namespace WebApplication1.Controllers
             objProductModel.ExportsTitle = "Exports";
 
             return View(objProductModel);
+        }
+
+        public ActionResult ChartExample()
+        {
+            return View();
         }
 
         public void getIPT()

@@ -45,14 +45,14 @@ function drawChart(chartType) {
                 type: 'exponential'
             }
         },
-        pieHole: 0.4,
+        pieHole: 0.4
     };
     //ColumnChart
     if (chartType == 'LineChart') {
-        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart= new google.visualization.LineChart(document.getElementById('chart_div'));
     }
     if (chartType == 'ColumnChart') {
-        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
     }
 
     // Wait for the chart to finish drawing before calling the getImageURI() method.
