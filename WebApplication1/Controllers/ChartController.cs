@@ -14,9 +14,7 @@ namespace WebApplication1.Controllers
         public DataTable resultsTrend = new DataTable();
         public DataTable resultsHistoria = new DataTable();
         private static string _schemaName;
-
-        //public string connString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=charts.drawing;Integrated Security=True";
-        public string connString = null;//"Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=charts.drawing;Integrated Security=True";
+        public string connString = null;
 
 
         //zapytania pomocnicze
@@ -40,7 +38,6 @@ namespace WebApplication1.Controllers
             GetConnectionStringAndSchemaIfExist();
             HistoryModel objProductModel = new HistoryModel();
             objProductModel.HistoryDatas = new History();
-            // objProductModel.HistoryDatas = resultsHistoria;
             objProductModel.YearTitle = "Year";
             objProductModel.ImportsTitle = "Imports";
             objProductModel.ExportsTitle = "Exports";
@@ -55,7 +52,6 @@ namespace WebApplication1.Controllers
             GetConnectionStringAndSchemaIfExist();
             HistoryModel objProductModel = new HistoryModel();
             objProductModel.HistoryDatas = new History();
-            // objProductModel.HistoryDatas = resultsHistoria;
             objProductModel.YearTitle = "Year";
             objProductModel.ImportsTitle = "Imports";
             objProductModel.ExportsTitle = "Exports";
@@ -117,15 +113,12 @@ namespace WebApplication1.Controllers
         {
             var JSONString = string.Empty;
 
-            //List<History> JSONString = new List<History>();
             GetConnectionStringAndSchemaIfExist();
             gethistory();
             var tmphistory = resultsHistoria;
-            //JSONString = ConvertDataTable<History>(resultsHistoria);
 
             JSONString = JsonConvert.SerializeObject(resultsHistoria);
             return Json(new { JSONList = JSONString }, JsonRequestBehavior.AllowGet);
-            //return JSONString;
         }
 
         public string GetChartDataHistory()

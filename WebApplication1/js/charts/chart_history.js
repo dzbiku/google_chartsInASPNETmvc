@@ -1,5 +1,4 @@
-﻿// change chart type
-function FirstMetToGetDataHistory(chartType) {
+﻿function FirstMetToGetDataHistory(chartType) {
     $.ajax({
         url: '/Chart/GetChartDataHistory',
         data: "",
@@ -7,7 +6,7 @@ function FirstMetToGetDataHistory(chartType) {
         type: "GET",
         contentType: "application/json; chartset=utf-8",
         success: function (data) {
-            chartData = data;//.JSONList;
+            chartData = data;
         },
         error: function () {
             alert("Error loading data! Please try again.");
@@ -26,7 +25,6 @@ function drawChart(chartType) {
     data.addColumn('number', 'Pośrednio Produkcyjne');
     data.addColumn('number', 'Bezpośrednio Produkcyjne');
 
-    // sample data: var data = [{ Date: "20140124", Visitors: "873" }, { Date: "20140125", Visitors: "875" }];
     for (var i = 0; i < chartData.length; i++) {
         data.addRow(chartData[i]);
     }
