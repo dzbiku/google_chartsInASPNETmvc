@@ -174,4 +174,3 @@ function drawChartAnnotation() {
     var chart = new google.visualization.AnnotationChart(document.getElementById('chart_div_Annotation'));
     chart.draw(data, options);
 }
-
