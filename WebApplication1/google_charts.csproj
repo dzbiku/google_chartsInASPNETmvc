@@ -168,6 +168,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Imges\Wykres.png" />
+    <Content Include="js\charts\chart_example.js" />
     <Content Include="js\charts\chart_history.js" />
     <Content Include="js\charts\chart_trend.js" />
     <Content Include="js\charts\main_chart.js" />
@@ -231,7 +232,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Chart\ChartHistory.cshtml" />
-    <Content Include="Views\Chart\ChartExmalple.cshtml" />
+    <Content Include="Views\Chart\ChartExample.cshtml" />
     <Content Include="Views\Chart\ChartTrend.cshtml" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
